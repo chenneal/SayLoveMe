@@ -1,0 +1,111 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <!-- import CSS -->
+  <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
+  <link rel="stylesheet" type="text/css" href="style.css" /> 
+</head>
+<body>
+  <div id="app" class="app">
+    <el-dialog
+      title="提示"
+      :visible.sync="innerVisible"
+      width="100%"
+      heigth="100%"
+      center>
+      <img :src="imgsrc"></img>
+      <span slot="footer" class="dialog-footer">
+        <el-button v-model="step" v-show="isShow" @click="handleCancel">{{ cancelText }}</el-button>
+        <el-button type="primary" v-model="step" @click="handleOK">{{ okText }}</el-button>
+      </span>
+    </el-dialog>
+  </div>
+</body>
+  <!-- import Vue before Element -->
+  <script src="https://unpkg.com/vue/dist/vue.js"></script>
+  <!-- import JavaScript -->
+  <script src="https://unpkg.com/element-ui/lib/index.js"></script>
+  <script>
+    new Vue({
+      el: '#app',
+      data: function() {
+        return { 
+          step: 1,
+          imgsrc: "1.png",
+          innerVisible: true,
+          isShow: false,
+          okText: "下一步",
+          cancelText: "不爱你",
+          sayOk: false
+        }
+      },
+      methods: {
+        handleOK(val) {
+          if (this.step < 9) {
+            this.step++;
+            this.imgsrc = this.step + '.png';
+          }
+          else {
+            console.log(this.step);
+            if (this.step === 9) {
+              this.step++;
+              this.imgsrc = this.step + '.png';
+              this.cancelText = "不爱你";
+              this.okText = "爱你";
+              this.isShow = true;
+              this.step = 11;
+            }
+            else if (this.step === 10) {
+              this.step++;
+              this.imgsrc = this.step + '.png';
+              this.cancelText = "就不说";
+              this.okText = "好吧，我爱你";
+              this.isShow = true;
+              this.sayOk = true;
+              this.step = 11;
+            }
+            else if (this.step === 11) {
+              this.step++;
+              this.imgsrc = this.step + '.png';
+              this.isShow = false;
+              this.imgsrc = this.step + '.png';
+              this.okText = "告辞";
+              this.sayOk = true;
+            }
+            else if (this.step === 12) {
+              window.close();
+            }
+          }
+        },
+
+        handleCancel(val) {
+          if (this.step < 10) {
+              ;
+          }
+          else {
+            this.isShow = true;
+            if (this.step === 11) {
+              this.imgsrc = this.step + '.png';
+              this.cancelText = "就不说";
+              this.okText = "好吧，我爱你";
+              this.sayOk = false;
+            }
+            if (this.step === 10) {
+              this.step++;
+              this.imgsrc = this.step + '.png';
+              this.cancelText = "就不说";
+              this.okText = "好吧，我爱你";
+              this.isShow = true;
+              this.sayOk = false;            
+            }
+            if (this.sayOk == true) {
+              this.step = 12;
+            }
+          }
+        }
+      }
+
+    })
+  </script>
+</html>
